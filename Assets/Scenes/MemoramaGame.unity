@@ -299,6 +299,15 @@ MonoBehaviour:
   isGamePaused: 1
   txtScore: {fileID: 412199428}
   gridLayout: {fileID: 1518153459}
+  possibilities:
+  - {fileID: 21300000, guid: 62fbfb22c73ad784286044e78b6a8f7c, type: 3}
+  - {fileID: 21300000, guid: ea67c4320f8085641a2b55a62e9a57f0, type: 3}
+  - {fileID: 21300000, guid: 14de496751864c540a714d666a9fe92e, type: 3}
+  - {fileID: 21300000, guid: 9c12204c27e511542b30ae4b456b6e27, type: 3}
+  - {fileID: 21300000, guid: d866de9ae33a15e43b68259d574a08a7, type: 3}
+  - {fileID: 21300000, guid: e5cb6ac346e8a5046830cd4cb0ba5188, type: 3}
+  - {fileID: 21300000, guid: 87e9d9456c333e143ad017e19f8bc2cf, type: 3}
+  - {fileID: 21300000, guid: 8ebfd8781f21d834d8f1ee2031585064, type: 3}
 --- !u!4 &551425655
 Transform:
   m_ObjectHideFlags: 0

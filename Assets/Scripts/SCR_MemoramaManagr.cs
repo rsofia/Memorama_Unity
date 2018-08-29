@@ -6,6 +6,7 @@ using TMPro;
 
 public class SCR_MemoramaManagr : MonoBehaviour {
 
+    [HideInInspector]
     public int gridSize = 4;
     public GameObject cardPrefab;
     public bool isGamePaused = true; //whether the game is currently on or not
@@ -24,6 +25,7 @@ public class SCR_MemoramaManagr : MonoBehaviour {
     private void Start()
     {
         CreateGrid();
+        ShowCardsForAFewSeconds();
     }
 
     private void CreateGrid()
@@ -36,17 +38,20 @@ public class SCR_MemoramaManagr : MonoBehaviour {
             for(int j = 0; j < gridSize; j++)
             {
                 GameObject temp = Instantiate(cardPrefab, gridLayout.transform);
+                foundIt = true;
                 int randomCard = 0;
+                counter = 0;
                 //Make sure we dont use the same pair twice
                 do
                 {
                     randomCard = Random.Range(0, possibilities.Length);
                     foreach (SCR_Card card in allCards)
                     {
+                        counter = 0;
                         if (card.front == possibilities[randomCard])
                         {
                             counter++;
-                            if (counter == 2) //2 to make the pair
+                            if (counter >= 2) //2 to make the pair
                             {
                                 foundIt = false;
                                 break;
@@ -58,6 +63,7 @@ public class SCR_MemoramaManagr : MonoBehaviour {
                 allCards.Add(temp.GetComponent<SCR_Card>());
             }
         }
+
     }
 
     private void RestLife()
@@ -78,8 +84,8 @@ public class SCR_MemoramaManagr : MonoBehaviour {
 
         if (currentTurnedCards.Count == 2)
         {
-            //Check if shown cards arent a match (if they are a match, it's automatically check inside each MemoramaCard)
-            if (currentTurnedCards[0].connection != currentTurnedCards[1])
+            //Check if shown cards arent a match
+            if (currentTurnedCards[0].front != currentTurnedCards[1].front)
             {
                 RestLife();
                 //Voltear las dos
@@ -87,11 +93,10 @@ public class SCR_MemoramaManagr : MonoBehaviour {
                 currentTurnedCards[1].Turn();
                 currentTurnedCards.Clear();
             }
-
-#if UNITY_EDITOR
             else
-                Debug.Log("1. Connections do match!");
-#endif
+            {
+                currentTurnedCards[0].FoundMatch(currentTurnedCards[1]);
+            }
         }
     }
 
@@ -136,4 +141,27 @@ public class SCR_MemoramaManagr : MonoBehaviour {
 
     }
     #endregion
+
+    private void ShowCardsForAFewSeconds()
+    {
+        StartCoroutine(WaitToStart());
+    }
+
+    IEnumerator WaitToStart()
+    {
+        foreach(SCR_Card card in allCards)
+        {
+            card.Turn();
+        }
+        yield return new WaitForSeconds(4.0f);
+
+        foreach (SCR_Card card in allCards)
+        {
+            card.Turn();
+        }
+
+        isGamePaused = false;
+
+        gridLayout.enabled = false;
+    }
 }

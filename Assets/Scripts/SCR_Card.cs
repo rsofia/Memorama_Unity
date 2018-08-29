@@ -65,14 +65,14 @@ public class SCR_Card : MonoBehaviour {
         {
             if (memoramaManager == null)
                 memoramaManager = FindObjectOfType<SCR_MemoramaManagr>();
-            if (!memoramaManager.isGamePaused)
-            {
+            //if (!memoramaManager.isGamePaused)
+            //{
                 myAnim.SetTrigger("turn");
-            }
-#if UNITY_EDITOR
-            else
-                Debug.Log("Game paused for some reason");
-#endif
+            //}
+//#if UNITY_EDITOR
+//            else
+//                Debug.Log("Game paused for some reason");
+//#endif
         }
 
         public void ChangeTurn()
@@ -84,42 +84,51 @@ public class SCR_Card : MonoBehaviour {
 
         }
 
-        private void Hide()
+        public void Hide()
         {
             myImg.sprite = back;
             memoramaManager.RemoveACard(this);
             isHidden = true;
         }
 
-        private void Show()
+        public void Show()
         {
             myImg.sprite = front;
             if (!memoramaManager.isGamePaused)
                 memoramaManager.AddACard(this);
             isHidden = false;
 
-            if (!memoramaManager.isGamePaused)
-                StartCoroutine(WaitForCheck());
+            //if (!memoramaManager.isGamePaused)
+            //    StartCoroutine(WaitForCheck());
 
         }
 
-        IEnumerator WaitForCheck()
-        {
-            yield return new WaitForEndOfFrame(); //Check if its connection is showing too
-            if (connection != null && connection.connection != null)
-            {
-                if (connection.IsShowing() && memoramaManager.IsCardTurned(this) && memoramaManager.IsCardTurned(connection) && connection.gameObject.activeSelf)
-                {
-#if UNITY_EDITOR
-                    Debug.Log("2. They were indeed a match.");
-#endif
-                    wasAMatch = true;
-                    memoramaManager.RemoveACard(this);
-                    memoramaManager.RemoveACard(connection);
-                    MarkAsCompleted();
-                }
-            }
-        }
+//        IEnumerator WaitForCheck()
+//        {
+//            yield return new WaitForEndOfFrame(); //Check if its connection is showing too
+//            if (connection != null && connection.connection != null)
+//            {
+//                if (connection.IsShowing() && memoramaManager.IsCardTurned(this) && memoramaManager.IsCardTurned(connection) && connection.gameObject.activeSelf)
+//                {
+//#if UNITY_EDITOR
+//                    Debug.Log("2. They were indeed a match.");
+//#endif
+//                    wasAMatch = true;
+//                    memoramaManager.RemoveACard(this);
+//                    memoramaManager.RemoveACard(connection);
+//                    MarkAsCompleted();
+//                }
+//            }
+//        }
+
+        public void FoundMatch(SCR_Card _conn)
+    {
+        wasAMatch = true;
+        connection = _conn;
+        memoramaManager.RemoveACard(this);
+        memoramaManager.RemoveACard(connection);
+        MarkAsCompleted();
+    }
 
         public void Match(SCR_Card con)
         {
