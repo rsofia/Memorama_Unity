@@ -20,14 +20,19 @@ public class SCR_MemoramaManagr : MonoBehaviour {
     [Tooltip("Game Over Window")]
     public GameObject gameOverPanel;
     [Tooltip("Show the player's score")]
+    [Header("Player Score")]
     public SCR_StarSystem starSystem;
+    [Header("Lives")]
+    public SCR_StarSystem livesSystem;
 
-
-    private int score = 0; //Initial Score
+    //Initial Score
+    private int score = 0; 
     //List to save the currently turned cards
     private List<SCR_Card> currentTurnedCards = new List<SCR_Card>();
     //List to save all the cards
     private List<SCR_Card> allCards = new List<SCR_Card>();
+    //Lives
+    private int health = 3;
 
     private void Start()
     {
@@ -53,7 +58,6 @@ public class SCR_MemoramaManagr : MonoBehaviour {
                 do
                 {
                     randomCard = Random.Range(0, possibilities.Length);
-                    counter = 0;
                     foreach (SCR_Card card in allCards)
                     {
                         if (card.front == possibilities[randomCard])
@@ -77,6 +81,17 @@ public class SCR_MemoramaManagr : MonoBehaviour {
 
     private void RestLife()
     {
+        --health;
+        if (health <= 0)
+        {
+            livesSystem.FillStarsWithScore(0);
+            GameOver("Sorry!");
+        }
+        else
+        {
+            livesSystem.FillStarsWithScore((health * 6) / 3);
+        }
+
 
     }
 
