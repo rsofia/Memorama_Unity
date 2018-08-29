@@ -14,7 +14,14 @@ public class SCR_MemoramaManagr : MonoBehaviour {
 
     public UnityEngine.UI.GridLayoutGroup gridLayout; //component in charge of making the grid
 
+    [Tooltip("Possible Images to use on memorama")]
     public Sprite[] possibilities; //Images to use
+
+    [Tooltip("Game Over Window")]
+    public GameObject gameOverPanel;
+    [Tooltip("Show the player's score")]
+    public SCR_StarSystem starSystem;
+
 
     private int score = 0; //Initial Score
     //List to save the currently turned cards
@@ -24,6 +31,7 @@ public class SCR_MemoramaManagr : MonoBehaviour {
 
     private void Start()
     {
+        gameOverPanel.SetActive(false);
         CreateGrid();
         ShowCardsForAFewSeconds();
     }
@@ -45,15 +53,16 @@ public class SCR_MemoramaManagr : MonoBehaviour {
                 do
                 {
                     randomCard = Random.Range(0, possibilities.Length);
+                    counter = 0;
                     foreach (SCR_Card card in allCards)
                     {
-                        counter = 0;
                         if (card.front == possibilities[randomCard])
                         {
                             counter++;
                             if (counter >= 2) //2 to make the pair
                             {
                                 foundIt = false;
+                                counter = 0;
                                 break;
                             }
                         }
@@ -114,7 +123,7 @@ public class SCR_MemoramaManagr : MonoBehaviour {
     #region SCORE
     public void AddScore()
     {
-        score += 1 * 10;
+        score += 10;
         txtScore.text = "Score: " + score.ToString();
     }
 
@@ -138,7 +147,8 @@ public class SCR_MemoramaManagr : MonoBehaviour {
 
     private void GameOver(string _mssg, bool gameWon = false)
     {
-
+        starSystem.FillStarsWithScore((score * 6)/80);
+        gameOverPanel.SetActive(true);
     }
     #endregion
 
