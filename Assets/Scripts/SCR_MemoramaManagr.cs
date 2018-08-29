@@ -58,6 +58,7 @@ public class SCR_MemoramaManagr : MonoBehaviour {
                 do
                 {
                     randomCard = Random.Range(0, possibilities.Length);
+                    counter = 0;
                     foreach (SCR_Card card in allCards)
                     {
                         if (card.front == possibilities[randomCard])
@@ -66,11 +67,12 @@ public class SCR_MemoramaManagr : MonoBehaviour {
                             if (counter >= 2) //2 to make the pair
                             {
                                 foundIt = false;
-                                counter = 0;
                                 break;
                             }
                         }
                     }
+                    if (counter == 0 || counter == 1)
+                        foundIt = true;
                 } while (foundIt == false);
                 temp.GetComponent<SCR_Card>().Init(this, possibilities[randomCard]);
                 allCards.Add(temp.GetComponent<SCR_Card>());
