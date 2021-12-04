@@ -1,5 +1,5 @@
 # Memorama Unity
-This game was made for a job interview for a game developer job at Murder Pixels. 
+This game was made for a job interview for a game developer job at Murder Pixels during my birthday in August 2018. 
 
 Main menu:
 
