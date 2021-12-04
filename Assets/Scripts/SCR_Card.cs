@@ -52,7 +52,7 @@ public class SCR_Card : MonoBehaviour {
             return !isHidden;
         }
 
-        //This function is in case the developer forgot to assing either connection
+        //This function is in case the developer forgot to assign either connection
         private void AssignConnectionToMyConnection()
         {
             if (connection != null && connection.connection == null)
